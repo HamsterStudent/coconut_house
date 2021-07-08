@@ -2,6 +2,9 @@ const express = require('express') // 익스프레스 모듈을 가져오기
 const app = express() // 새로운 익스프레스 앱을 만들기
 const port = 6000 // 서버로 두는 곳
 const bodyParser = require('body-parser');
+
+const config = require('./config/key')
+
 const { User } = require("./models/User");
 
 app.use(bodyParser.urlencoded({extended: true})); //application/x-www-form-unlencoded 로 된 데이터를 분석해서 가져올 수 있게
@@ -9,7 +12,7 @@ app.use(bodyParser.urlencoded({extended: true})); //application/x-www-form-unlen
 app.use(bodyParser.json()); //application/json 로 된 데이터를 분석해서 가져올 수 있게
 
 const mongoose = require('mongoose')
-mongoose.connect('mongodb+srv://chekov:chekov!@coconut.lcm3e.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',{
+mongoose.connect(config.mongoURI, {
     useNewUrlParser:true, useUnifiedTopology:true, useCreateIndex: true, useFindAndModify:false
 }).then(()=> console.log('MongoDB Connected...')).catch(err => console.log(err))
 
